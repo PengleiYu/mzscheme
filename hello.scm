@@ -9,8 +9,10 @@
 					  (if (<= i n)
 						(let ((f (car ff)))
 						  (vector-set! vv i 
-									   (if (pair? f) (cadr f) '(if #f #f)))
-						  (loop (+ i 1) (cdr ff)))))
+									   (if (pair? f) (cadr f) '(if #f #f (newline))))
+						  (loop (+ i 1) (cdr ff)))
+						(newline)
+						))
 					(let ((ff (map (lambda (f) (if (pair? f) (car f) f))
 								   ff)))
 					  `(begin
@@ -24,7 +26,8 @@
 									 (loop (+ i 1)
 										   (cons `(vector-set! st ,i 
 															   ,(vector-ref vv i))
-												 r))))
+												 r))
+									 ))
 							   (let loop ((fvfv fvfv))
 								 (if (not (null? fvfv))
 								   (begin
@@ -32,7 +35,9 @@
 												  (+ (list-position (car fvfv) ff)
 													 1)
 												  (cadr fvfv))
-									 (loop (cddr fvfv)))))
+									 (loop (cddr fvfv)))
+								   (newline)
+								   ))
 							   st)))
 						 ,@(let loop ((i 1) (procs '()))
 							 (if (>= i n+1) procs
@@ -55,3 +60,8 @@
 						   (lambda (x)
 							 (and (vector? x)
 								  (eqv? (vector-ref x 0) ',s))))))))))
+
+
+(defstruct people name age)
+
+(defstruct table (equ eqv?) (alist '()))
