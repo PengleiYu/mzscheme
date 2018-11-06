@@ -43,3 +43,42 @@
 (tree.height plantain)
 (tree.leaf-shape plantain)
 (tree.leaf-color plantain)
+
+;第十章：关联表和表格
+
+(define foo (list '(a . 1) '(b . 2) '(c . 3)))
+
+(assv 'b foo)
+
+;定义表结构
+(defstruct table (equ eqv?) (alist '()))
+(define table-get
+  (lambda (tbl k . d)
+	(let ((c (lassoc k (table.alist tbl)  (table.equ tbl))))
+	  (cond (c (cdr c))
+			((pair? d)  (car d))))))
+(define lassoc
+  (lambda (k al equ?)
+	(let loop ((al al))
+	  (if (null? al) #f
+		(let ((c (car al)))
+		  (if (equ? (car c) k) c
+			(loop (cdr al))))))))
+(define table-put!
+  (lambda (tbl k v)
+	(let ((al (table.alist tbl)))
+	  (let ((c (lassoc k al (table.equ tbl))))
+		(if c (set-cdr! c v)
+		  (set!table.alist tbl (cons (cons k v) al)))))))
+(define table-for-each
+  (lambda (tbl p)
+	(for-each
+	  (lambda (c)
+		(p (car c)  (cdr c)))
+	  (table.alist tbl))))
+
+;;; todo 未运行成功
+(define foo '((a . 1) (b . 2) (c . 3)))
+(table-get foo 'b )
+
+foo
