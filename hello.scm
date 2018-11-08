@@ -83,7 +83,7 @@
 	  (table.alist tbl))))
 
 ;;; todo 未运行成功
-(define foo '((a . 1) (b . 2) (c . 3)))
+(define foo (make-table 'alist '((a . 1) (b . 2) (c . 3))))
 
 (for-each myPrint foo)
 
