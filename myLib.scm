@@ -8,6 +8,31 @@
 		(if (eqv? (car l) o) i
 		  (loop (+ i 1)   (cdr l)))))))
 
+;定义set-car!
+(define-macro set-car!
+			  (lambda (li . elem)
+				`(set! ,li
+				   (cons (car ',elem) (cdr ,li)))))
+;定义set-cdr!
+(define-macro set-cdr!
+			  (lambda (li . elem)
+				`(set! ,li
+				   (cons (car ,li) ',elem)
+				   )))
+
+;(apply
+;  (lambda (li . elem)
+;	`(set! ,li (cons (car ',elem) (cdr ,li)))
+;	)
+;  '(a 9 10)
+;  )
+;
+
+(define a '(1 . 2))
+
+(set-car! a 9 8)
+
+(set-cdr! a 1 3)
 
 ;;;定义结构宏
 ;;;和教程不同，mzscheme中if必须有else分支，所以只好为if的空分支添加了void
